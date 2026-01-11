@@ -83,6 +83,54 @@ Example:
 DOWNLOADS_DIR=~/Desktop TARGET_DIR=~/Desktop/Sorted ./run.sh
 ```
 
+## Scheduled Execution
+
+You can automate Downloads Detox to run periodically using cron.
+
+### Setup (Weekly on Sundays at 10am)
+
+```bash
+# Add cron job
+(crontab -l 2>/dev/null; echo "0 10 * * 0 cd ~/Desktop/Programming/downloads-detox && bash run.sh >> /tmp/downloads-detox.log 2>&1") | crontab -
+
+# Verify it was added
+crontab -l
+```
+
+### Cron Schedule Examples
+
+| Schedule | Cron Expression |
+|----------|-----------------|
+| Every Sunday 10am | `0 10 * * 0` |
+| Every day 8am | `0 8 * * *` |
+| Every Monday 6pm | `0 18 * * 1` |
+| First of month | `0 10 1 * *` |
+
+### Managing the Cron Job
+
+```bash
+# View current cron jobs
+crontab -l
+
+# Edit cron jobs
+crontab -e
+
+# Remove all cron jobs (be careful!)
+crontab -r
+```
+
+### Logs
+
+Scheduled runs log to `/tmp/downloads-detox.log`:
+
+```bash
+# View recent logs
+tail -20 /tmp/downloads-detox.log
+
+# Check for errors
+cat /tmp/downloads-detox.err
+```
+
 ## Individual Scripts
 
 Each script can be run standalone:
